@@ -1,0 +1,60 @@
+# Task 1.
+## Get output from 3 tables: Books, Authors, Subjects
+## Output format:
+## Book.id, book.title, book.author_id, book.subject_id, authors.last_name, authors.first_name, subjects.subject, subjects.location
+
+SELECT books.id, books.title, books.author_id, books.subject_id, 
+authors.last_name, authors.first_name,
+subjects.subject, subjects.location
+FROM books
+LEFT JOIN authors on authors.id = books.author_id
+LEFT JOIN subjects on subjects.id = books.subject_id;
+
+# Task 2.
+## Show all information about books in queue, e.g. author, title, subject. 
+
+SELECT * FROM book_queue;
+
+## or with more informations
+
+SELECT book_queue.title, book_queue.author_id, book_queue.subject_id, book_queue.approved,
+authors.id, authors.last_name, authors.first_name,
+subjects.id, subjects.subject, subjects.location
+FROM book_queue
+LEFT JOIN authors on authors.id = book_queue.author_id
+LEFT JOIN subjects on subjects.id = book_queue.subject_id;
+
+
+# Task 3.
+## Show all information about favorite books (from books table), also show employees info.
+## Use favorite_authors tabl.
+
+select unnest (ARRAY['J.R.R. Tolkien', 'Charles Dickens', 'Ariel Denham']) as authors,
+unnest (ARRAY['The Silmarillion', 'CGreat Expectations', 'Attic Lives']) as titles,
+last_name,
+first_name
+from favorite_authors
+left join employees on employees.id = favorite_authors.employee_id;
+
+# Task 4.
+## Show all shipment info from shipments table, as much as you can.
+
+SELECT shipments.id, customer_id, isbn, ship_date,
+customers.last_name, customers.first_name
+FROM shipments
+LEFT JOIN customers on customers.id = shipments.customer_id;
+
+# Task 5.
+## Show all info for books with min and max cost from stock table 
+
+select stock.isbn, cost, retail, stock, editions.isbn, book_id,  books.id,title,author_id, 
+authors.id,last_name,first_name
+from stock
+join editions on editions.isbn = stock.isbn
+join books on books.id = editions.book_id
+join authors on authors.id = books.author_id
+where stock.isbn in
+(select isbn from stock where cost in (select min(cost) as min from stock)
+union
+select isbn from stock where cost in (select max(cost) as max from stock));
+

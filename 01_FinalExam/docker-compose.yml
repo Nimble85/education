@@ -1,0 +1,22 @@
+#version 3 and hier for swarm
+version: "2" 
+
+services:
+    jenkins:
+       image: jenkinsci/jenkins:latest
+       container_name: jenkins-dev
+       user: root
+       ports:
+            - "8080:8080"
+            - "50000:50000"
+       volumes:
+        # enable persistent volume (warning: make sure that the local jenkins_home folder is created)
+        - ./jenkins_data:/var/jenkins_home
+        # mount docker sock and binary for docker in docker (only works on linux)
+        - /var/run/docker.sock:/var/run/docker.sock
+        - /usr/bin/docker:/usr/bin/docker
+#volumes:
+#      - ./jenkins_data:
+#      - /var/run/docker.sock:
+#      - /usr/bin/docker:
+      

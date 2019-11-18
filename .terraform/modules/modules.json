@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"rg","Source":"./modules/rg","Dir":"modules\\rg"},{"Key":"network","Source":"./modules/network","Dir":"modules\\network"},{"Key":"net_sec_group","Source":"./modules/net_sec_group","Dir":"modules\\net_sec_group"},{"Key":"vm","Source":"./modules/vm","Dir":"modules\\vm"},{"Key":"","Source":"","Dir":"."}]}

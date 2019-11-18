@@ -1,0 +1,22 @@
+version: "3.1"
+ 
+services:
+# docker service vizualization
+ viz:
+  image: dockersamples/visualizer
+  ports:
+   - 8080:8080
+  volumes:
+   - /var/run/docker.sock:/var/run/docker.sock
+  deploy:
+   placement: 
+    constraints: [node.role == manager]
+# docker container of jenkins as master
+ jenkins-master:
+  image: jenkins/jenkins
+  ports:
+   - 8181:8080
+# docker container of jenkins as slave
+ jenkins-slave:
+  image: jenkins/slave
+   
